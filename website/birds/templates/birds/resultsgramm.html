@@ -1,0 +1,33 @@
+<div >
+{% if choice.ans  %}
+
+<h1>{{ choice.choice_text }}
+    right answer
+</h1>
+<button id="next" qid="{{ question_id }}">
+	Next
+</button>
+
+{% else %}
+
+ <p> wrong answer</p>
+{% endif %}
+</div>
+
+<script type="text/javascript">
+	
+		document.getElementById("next").onclick= function() {
+			var qid=$('#next').attr('qid');
+			var quesid=parseInt(qid)+1;
+			console.log(quesid);
+			location.href="/birds/welcome/grammar/"+quesid+"/";
+			//console.log(location.href);
+			//$('#rem').empty();	
+			// body...
+
+		};
+</script>
+
+
+
+

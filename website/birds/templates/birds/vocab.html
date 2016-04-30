@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vocabulary page</title>
+</head>
+<body>
+	<div id="left"></div>
+	<div id="center">
+		<div><img id="image2" src="logo.png"></div>
+		<div> 
+			<div class="fade-in a">
+			<div id="image"><img src="final.png" style="width: 60px; height: 60px; border-radius: 50px"></div>
+			<div class="list" style="display: inline-block;"><b> VOCABULARY </b>
+			<span>There are 6 questions in this vocabulary game.<br> Find the correct answers and win the game !</span>
+			<button type="button"  id="start" style="display: block;">
+				START
+			</button>
+			</div>
+			</div>
+			<div id="box">
+			<a href="/birds/welcome"><button class="btn">Restart</button></a>
+			<a href="/birds/welcome"><button class="btn">Home</button></a>
+			<a href=""><button class="btn">Progress</button></a>
+			<a href="/birds/"><button class="btn">Exit</button></a>
+		</div>
+		</div>
+
+	</div>
+	<div id="right"></div>
+
+	<style type="text/css">
+	#left {
+		float: left;
+		display: inline-block;
+		background-color: white;
+		width: 30%;
+		height: 600px;
+	}
+	#center {
+		background: url(bg.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+		font-family: Courier New;
+		display: inline-block;
+		width: 40%;
+		height: 600px;
+		padding-bottom: 30px;	
+	}
+	#right {
+		float: right;
+		display: inline-block;
+		background-color: white;
+		width: 30%;
+		height: 600px;
+	}
+	.list {
+		color: rgb(149,149,149);
+		margin-top: 150px;
+		text-align: left;
+		font-size: 25px;
+		font-family: comic sans MS;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		height: 10%;
+		width: 75%;
+		float: right;
+		position: relative;
+	}
+	#image {
+		margin-top: 150px;
+		padding-left: 30px;
+		padding-right: 30px;
+		display: inline-block; 
+		border-width: 10px;
+		border-color: solid-black;
+		position: relative;	
+	}
+	span {
+		font-size: 15px;
+		font-family: comic sans MS;
+		display: block;
+		margin-top: 20px;
+		position: relative;
+	}
+	#image2 {
+		width: 100px;
+		height: 100px;
+		padding-right: 400px;
+		padding-left: 10px;
+		margin-top: 10px;
+	}
+	.btn {
+        -webkit-border-radius: 10
+        -moz-border-radius: 10;
+  		border-radius: 30px;
+  		font-family: Courier New;
+  		color: #fcfcfc;
+  		font-size: 15px;
+  		background: #316e96;
+  		padding: 10px 10px 10px 10px;
+  		text-decoration: none;
+	}
+	#box {
+		position: relative;
+		margin-top: 180px;
+		padding-top: 20px;
+		padding-bottom: 20px;
+		padding-left: 40px;
+	}
+	
+	</style>
+</body>
+
+</html>
+
+<script type="text/javascript">
+	
+document.getElementById("start").onclick= function() {
+			location.href="/birds/welcome/vocabulary/1";
+			// body...
+		};
+</script>

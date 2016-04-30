@@ -1,0 +1,103 @@
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'birds/style.css' %}" />
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>frontpage</title>
+</head>
+<body>
+<a href="#">haha</a>
+	<div id="left"></div>
+	<div id="center" align="center">
+		<div id="head"><h1 >WELCOME TO LEARNING ACADEMY</h1></div>
+		<h3>Select a character of your choice</h3>
+		<img src="{% static "birds/images/tomm.jpg" %}">
+		<img src="jerry.png">
+
+		<form id="entryForm" action="{% url 'birds:wel' %}" method="POST">{% csrf_token %}
+		<input type="text" name="name" placeholder="enter your name" value=""></input>
+		<input type="submit" class="button" value="submit" name="submit"></input>
+		</form>
+	<div> {{ resp }} </div>
+	</div>
+	<div id="right"></div>
+</body>
+</html>
+
+<script language="JavaScript">
+
+    /*
+    $(document).ready(function() {
+    	//e.getPreventDefault();
+        $("#entryForm").submit(function() { // catch the form's submit event
+        	console.log($(this).serialize());	
+            $.ajax({ // create an AJAX call...
+                data: $(this).serialize(), // get the form data
+                type: 'GET' ,
+                url: "{% url 'birds:wel' %}",
+                success: function(response) { 
+                	console.log("passed");
+                	location.href="/birds/welcome";
+                },
+                error: function(data) {
+                	console.log("failed");
+                	location.href="/birds/welcome";
+            }
+            });
+            return false;
+        });
+    });
+    */
+</script>
+
+<style type="text/css">
+	#left {
+		float: left;
+		display: inline-block;
+		background-color: #808080;
+		width: 30%;
+		height: 600px;
+	}
+	#center {
+		color: #808080;
+		font-family: ;
+		display: inline-block;
+		background-color: white;
+		width: 40%;
+		height: 600px;
+		margin-top: 60px;
+	}
+	#right {
+		float: right;
+		display: inline-block;
+		background-color: #808080;
+		width: 30%;
+		height: 600px;
+	}
+	#line {
+		height: 2px;
+		width: 40px;
+	}
+	#head {
+		background-color: rgb(34, 74, 82);
+		font-family: Comic Sans MS;
+		border: 5px solid #808080;
+		border-radius: 50px;
+		color: white;
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
+	.button {
+		background-color: #4CAF50; /* Green */
+    	border: none;
+    	color: white;
+    	padding: 5px 32px;
+    	text-align: center;
+    	text-decoration: none;
+    	display: block;
+    	font-size: 16px;
+	}
+	</style>

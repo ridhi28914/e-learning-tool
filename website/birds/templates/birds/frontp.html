@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>front page</title>
+</head>
+<body>
+	<div id="left"></div>
+	<div id="center" align="center">
+		<div><img id="image" src="logo.png" align="center"></div>
+		<div class="fade-in a" id="head"><h2>WELCOME TO THE LEARNING ACADEMY</h2></div>
+		<div class="fade-in b"><h3>Select a character of your choice</h3></div>
+		<div class="fade-in c"><img src="tomm.png" width="100px" height="100px">
+		<img src="jerry.png" width="100px" height="100px"></div>
+		<div class="fade-in d">Enter your name below<br>
+		<input></input>
+		</div>
+		<div class="fade-in e"><button class="button"><bold>SUBMIT</bold></button></div>
+	</div>
+	<div id="right"></div>
+	<style type="text/css">
+	#left {
+		float: left;
+		display: inline-block;
+		background-color: white;
+		width: 30%;
+		height: 600px;
+	}
+	#center {
+		background: url(bg.png) no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+		color: #808080;
+		background-color: rgb(200,200,200);
+		font-family: comic sans MS;
+		display: inline-block;
+		background-color: white;
+		width: 40%;
+		height: 600px;
+	
+	}
+	#right {
+		float: right;
+		display: inline-block;
+		background-color: white;
+		width: 30%;
+		height: 600px;
+	}
+	#line {
+		height: 2px;
+		width: 40px;
+	}
+	#head {
+		background-color: white;
+		font-family: Comic Sans MS;
+		border: 5px solid white;
+		border-radius: 50px;
+		color: rgb(3, 105, 141);
+		padding-top: 10px;
+		padding-bottom: 10px;
+		margin-top: 5px;
+	}
+	.button {
+		background-color: #4CAF50; /* Green */
+    	border: none;
+    	color: white;
+    	padding: 5px 32px;
+    	margin-top: 5px;
+    	text-align: center;
+    	text-decoration: none;
+    	display: block;
+    	font-size: 16px;
+	}
+	#image {
+		width: 150px;
+		height: 150px;
+		padding-left: 80px;
+		padding-right: 100px;
+		margin-top: 5px;
+	}
+	/* ANIMATION */
+	@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    .fade-in {
+    	opacity:0;
+        -webkit-animation:fadeIn ease-in 1;
+        -moz-animation:fadeIn ease-in 1;
+        animation:fadeIn ease-in 1;
+
+        -webkit-animation-fill-mode:forwards; 
+        -moz-animation-fill-mode:forwards;
+    	animation-fill-mode:forwards;
+
+    
+        -webkit-animation-duration:1s;
+        -moz-animation-duration:1s;
+    	animation-duration:1s;
+	}
+	.a {
+	    -webkit-animation-duration:2s;
+        -moz-animation-duration:2s;
+    	animation-duration:1s;
+    	animation-delay: 0s;
+	}
+	.b {
+	    -webkit-animation-duration:2s;
+        -moz-animation-duration:2s;
+    	animation-duration:1s;
+    	animation-delay: 1s;
+	}
+	.c {
+	    -webkit-animation-duration:2s;
+        -moz-animation-duration:2s;
+    	animation-duration:1s;
+    	animation-delay: 2s;
+
+	}
+	.d {
+	    -webkit-animation-duration:2s;
+        -moz-animation-duration:2s;
+    	animation-duration:1s;
+    	animation-delay: 3s;
+	}
+	.e {
+	    -webkit-animation-duration:2s;
+        -moz-animation-duration:2s;
+    	animation-duration:1s;
+    	animation-delay: 4s;
+	}
+	</style>
+</body>
+</html>
