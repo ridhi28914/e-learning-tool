@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE >
 <html>
 <head>
@@ -11,41 +12,49 @@
 <body>
 	<div id="left"></div>
 	<div id="center" align="center">
-		<div><img id="image2" src="logo.png" align="left"></div>
+		<div><img id="image2" src="{% static "birds/images/logo.png" %}" align="left"></div>
 		<div class="fade-in a"> 
-			<div id="image"><img src="final.png" style="width: 60px; height: 60px;border-radius: 50px"></div>
+			<div id="image"><img src="{% static "birds/images/final.png" %}" style="width: 60px; height: 60px;border-radius: 50px"></div>
 			<div class="list" style="display: inline-block;" id="vocab"><a href="/birds/welcome/vocabulary" style="text-decoration: none;color: rgb(149,149,149);"><b> VOCABULARY </b></a></div>
 		</div>
 		<div class="fade-in b">  
-			<div id="image"><img src="final.png" style="width: 60px; height: 60px;border-radius: 50px"></div>
-			<div class="list" style="display: inline-block;" id="grammar"><a href="/birds/welcome/vocabulary" style="text-decoration: none;color: rgb(149,149,149);"><b> COMMUNICATION </b></a></div>
+			<div id="image"><img src="{% static "birds/images/final.png" %}" style="width: 60px; height: 60px;border-radius: 50px"></div>
+			<div class="list" style="display: inline-block;" id="communication"><a href="/birds/welcome/vocabulary" style="text-decoration: none;color: rgb(149,149,149);"><b> COMMUNICATION </b></a></div>
 		</div>
 		<div class="fade-in c"> 
-			<div id="image"><img src="final.png" style="width: 60px; height: 60px;border-radius: 50px"></div>
-			<div class="list" style="display: inline-block;"><a href="/birds/welcome/grammar" style="text-decoration: none;color: rgb(149,149,149);"><b> Grammar </b></a></div>
+			<div id="image"><img src="{% static "birds/images/final.png" %}" style="width: 60px; height: 60px;border-radius: 50px"></div>
+			<div class="list" style="display: inline-block;" id="grammar"><a href="/birds/welcome/grammar" style="text-decoration: none;color: rgb(149,149,149);"><b> GRAMMAR </b></a></div>
 		</div>
 		<div id="box">
 			<a href="/birds/welcome"><button class="btn">Restart</button></a>
 			<a href="/birds/welcome"><button class="btn">Home</button></a>
-<div class="container">
+
   <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Progress</button>
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
-      <div class="modal-content">
+      <div class="modal-content" id="modal_design" style="color: #808080; text-align: center">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
+          <h4 class="modal-title">PROGRESS</h4>
         </div>
+        <div id="line"></div>
         <div class="modal-body">
-        
+        {% if request.session.levelvocab  %}
+        Your name {{ request.session.gender }<br>
+        Vocabulary {{request.session.vocab }}<br>
+        Vocabulary Level 1 completed !
+        {% else %}
         Your name {{ request.session.gender }}<br>
         Vocabulary {{request.session.vocab }}
+
+{% endif %}
         </div>
+        <div id="line"></div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
@@ -54,7 +63,6 @@
     </div>
   </div>
   
-</div>
 			<a href="/birds/"><button class="btn">Exit</button></a>
 		</div>
 	</div>
@@ -68,7 +76,7 @@
 		height: 600px;
 	}
 	#center {
-		background: url(bg.png) no-repeat center center fixed; 
+		background: url({% static "birds/images/bg.png" %}) no-repeat center center fixed; 
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -93,22 +101,22 @@
 		font-size: 25px;
 		margin-top: 30px;
 		font-family: comic sans MS;
-		padding-bottom: 20px;
+		padding-bottom: 15px;
+		padding-top: 10px;
 		height: 10%;
 		width: 75%;
 		float: right;
 		color: rgb(149,149,149);
 	}
 	#image {
-		padding-top: 20px;
-		padding-left: 30px;
-		padding-right: 30px;
 		display: inline-block; 
 		border-width: 10px;
-		border-color: solid-black;	
+		border-color: solid-black;
+		margin-top: 30px;
+		margin-bottom: 10px;	
 	}
 	#box {
-		margin-top: 157px;
+		margin-top: 100px;
 		padding-top: 20px;
 		padding-bottom: 20px;
 	}
@@ -122,17 +130,25 @@
   		background: #316e96;
   		padding: 10px 10px 10px 10px;
   		text-decoration: none;
+  		margin-right: 20px;
 	}
 	#image2 {
 		width: 100px;
 		height: 100px;
-		padding-right: 400px;
 		padding-left: 10px;
 		margin-top: 10px;
+		margin-right: 400px;
+		display: block;
 	}
-	
+	/*modal design*/
+	#modal_design {
+		border: 5px solid #316e96;
+		border-radius: 50px;
+	}
+	#line {
+		border: 2px solid black;
+		height: 1px;
+	}
 	</style>
 </body>
 </html>
-
-</script>

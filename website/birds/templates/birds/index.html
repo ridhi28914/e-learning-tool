@@ -1,5 +1,4 @@
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'birds/style.css' %}" />
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
 
@@ -9,13 +8,12 @@
 	<title>frontpage</title>
 </head>
 <body>
-<a href="#">haha</a>
 	<div id="left"></div>
 	<div id="center" align="center">
 		<div id="head"><h1 >WELCOME TO LEARNING ACADEMY</h1></div>
 		<h3>Select a character of your choice</h3>
-		<img src="{% static "birds/images/tomm.jpg" %}">
-		<img src="jerry.png">
+		<img src="{% static "birds/images/tomm.png" %}">
+		<img src="{% static "birds/images/jerry.png" %}">
 
 		<form id="entryForm" action="{% url 'birds:wel' %}" method="POST">{% csrf_token %}
 		<input type="text" name="name" placeholder="enter your name" value=""></input>

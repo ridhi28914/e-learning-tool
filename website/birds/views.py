@@ -4,16 +4,17 @@ from django.core.urlresolvers import reverse
 from .models import Question,Choice,Questiongramm,Choicegramm
 from django.core.serializers import json, serialize
 from django.http import JsonResponse
-from django.utils.datastructures import MultiValueDictKeyError
+#from django.utils.datastructures import MultiValueDictKeyError
 
 
 
 def index(request):
-	request.session['gender'] = None
-	request.session['vocab']=0
-	request.session['lives']=2
-	print request.session['gender']
-	return render(request,'birds/index.html',{'resp':''})
+    request.session['gender'] = None
+    request.session['vocab']=0
+    request.session['lives']=2
+    request.session['levelvocab']=False
+    print request.session['gender']
+    return render(request,'birds/index.html',{'resp':''})
 
 #def welname(request):
    #return HttpResponse("Hello, world. You're at the birds index.")
@@ -32,9 +33,10 @@ def wel(request):
 	    return render(request,'birds/index.html',{'resp':'Please select a character.'})
 	else:
 	    print "here at welcome.html"
-	    #request.session['vocab']=0;
+        #prevocab=request.session['vocab']
+        #request.session['vocab']=0
 	    #request.session['gramm']=0;
-	    return render(request,'birds/welcome.html')
+	    return render(request,'birds/welcome.html',    )
 	
 def vocab(request):
 	if(request.session['gender'] == None):
@@ -47,9 +49,11 @@ def vocab(request):
 # Create your views here.
 
 def detail(request, question_id):
-	if(request.session['gender'] == None):
+    if(request.session['gender'] == None):
 	    return HttpResponse("you didnt select the gender")
-	else:    
+    else:    
+        if(question_id > 2):
+            request.session['levelvocab']=True
 	    question = get_object_or_404(Question, pk=question_id)
 	    return render(request, 'birds/detail.html', {'question': question})
 
@@ -62,25 +66,22 @@ def vote(request, question_id):
             selected_choice = question.choice_set.get(pk=request.GET['choice'])
     	except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
-        
-            return render(request, 'birds/detail.html', {
-            'question': question,
-            'message': "You didn't select a choice.",
-        })
+            print "key error"
+            return JsonResponse({'resp':'KeyError','error_message': "You didn't select a choice."})
         else:
             if(selected_choice.ans):
 	    		request.session['vocab']=request.session['vocab']+1
 	    		print request.session['vocab']
-        		return JsonResponse({'resp':'true'})
+        		return JsonResponse({'resp':'true','life':request.session['lives']})
             else:
             	request.session['lives']=request.session['lives']-1
             	print request.session['lives']
             	if (request.session['lives'] == 0):
             		request.session['vocab']=0
             		request.session['lives']=2
-            		return JsonResponse({'resp':'false'})
+            		return JsonResponse({'resp':'false','life':request.session['lives']})
             	else:
-        		return JsonResponse({'resp':'wrong answer','life':'1'})
+        		return JsonResponse({'resp':'wrong answer','life':request.session['lives']})
 
 def gramm(request):
 	if(request.session['gender'] == None):

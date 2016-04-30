@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,6 +50,7 @@
                 success: function(response) { 
                 	var qid=$('#next').attr('qid');
 					var quesid=parseInt(qid)+1;
+					
                 	if(response.resp == "true")
                 	{
                 	//console.log(qid);
@@ -57,22 +59,38 @@
                 		location.href="/birds/welcome/vocabulary/"+quesid+"/";
                 		else
                 		{
-                			alert("level one completed");
-                			
-                			//location.href="/birds/welcome";
+                			$("#life").empty();
+                    		$("#life").html("Lives left:"+response.life+" ");
+                			//$("#response").html("in response");
+                			console.log(quesid);
+                			if(quesid==3)
+                				$("#response").html("level one completed <br><a href='/birds/welcome/vocabulary/"+quesid+"/'><button class='btn'>Go to level 2</button></a> " );
+                			else if(quesid>4){
+                				$("#response").html("Level 2 completed! <a href='/birds/welcome'><button class='btn'>Play again?</button></a>");
+                			}
+                			else if(quesid==4)
+                			{
+								location.href="/birds/welcome/vocabulary/"+quesid+"/";
+                			}
+
                 		}
 
             		}
             		else if(response.resp=="false"){
+            			$("#life").empty();
+                    	//$("#life").html("Lives left:"+response.life+" ");
             			location.href="/birds/welcome";
+            		}
+            		else if(response.resp=="KeyError"){
+            			$("#response").html("Please Select a Choice");
             		}
            			else 
            			{
            				console.log("at wrong answer");
                 		//$('#outer-form').empty();
                     	$("#response").html("wrong answer ! <br><button id='again' class='btn'> try again. </button>"); 
-                    	//$("#life").empty();
-                    	//$("#life").html("Lives left:"+response.life+" ");
+                    	$("#life").empty();
+                    	$("#life").html("Lives left:"+response.life+" ");
                     	//location.href="/birds/welcome/vocabulary/"+parseInt(qid)+"/";
             	
            			}
@@ -110,7 +128,7 @@ document.getElementById("again").onclick= function() {
 		height: 600px;
 	}
 	#center {
-		background: url(bg.png) no-repeat center center fixed; 
+		background: url({% static "birds/images/bg.png" %}) no-repeat center center fixed; 
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
