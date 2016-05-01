@@ -83,13 +83,12 @@ def vote(request, question_id):
             	request.session['lives']=request.session['lives']-1
             	print request.session['lives']
             	if (request.session['lives'] == 0):
-            		request.session['vocab']=0
-            		request.session['lives']=2
-            		return JsonResponse({'resp':'false','life':request.session['lives']})
-            	else:
-                    print question.choice_set.get(ans=True)
+            	    request.session['vocab']=0
+            	    request.session['lives']=2
                     c=question.choice_set.get(ans=True)
-                    return JsonResponse({'resp':'wrong answer','life':request.session['lives'],'ans':c.choice_text})
+                    return JsonResponse({'resp':'false','life':request.session['lives'],'ans':c.choice_text})
+                else:
+                    return JsonResponse({'resp':'wrong answer','life':request.session['lives']})
 
 def maths(request):
     if(request.session['gender'] == None):
@@ -136,11 +135,11 @@ def votemaths(request, question_id):
                 if (request.session['lives'] == 0):
                     request.session['maths']=0
                     request.session['lives']=2
-                    return JsonResponse({'resp':'false','life':request.session['lives']})
-                else:
                     print question.choicemaths_set.get(ans=True)
                     c=question.choicemaths_set.get(ans=True)
-                    return JsonResponse({'resp':'wrong answer','life':request.session['lives'],'ans':c.choice_text})
+                    return JsonResponse({'resp':'false','life':request.session['lives'],'ans':c.choice_text})
+                else:
+                    return JsonResponse({'resp':'wrong answer','life':request.session['lives']})
 
 
 

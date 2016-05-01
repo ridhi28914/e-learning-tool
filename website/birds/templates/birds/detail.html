@@ -124,8 +124,8 @@
             		}
             		else if(response.resp=="false"){
             			$("#life").empty();
-                    	//$("#life").html("Lives left:"+response.life+" ");
-            			location.href="/birds/welcome";
+            			$("#response").html("Correct answer is:"+response.ans+"<br>Game Over <a href='/birds/welcome'><button>Play again?</button></a>"); 
+            			//location.href="/birds/welcome";
             		}
             		else if(response.resp=="KeyError"){
             			$("#response").html("Please Select a Choice");
@@ -134,7 +134,7 @@
            			{
            				console.log("at wrong answer");
                 		//$('#outer-form').empty();
-                    	$("#response").html("wrong answer ! <button id='resp'>See answer</button> "); 
+                    	$("#response").html("wrong answer !  "); 
                     	$("#life").empty();
                     	$("#life").html("Lives left:"+response.life+" ");
                     	//location.href="/birds/welcome/vocabulary/"+parseInt(qid)+"/";
