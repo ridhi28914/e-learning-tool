@@ -3,6 +3,11 @@
 <html>
 <head>
 	<title>ques page</title>
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div id="left"></div>
@@ -23,16 +28,57 @@
 				<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"> </input><label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
 			</div>
 {% endfor %}
-		<input class="submitbtn" type="submit" value="submit"></input>
+		<br><input class="btn" type="submit" value="Submit" style="margin-left: 40%;"></input>
 		</form>
 	
-<div id="response">
+<div id="response"> </button>
 </div>
 		<div id="box">
-			<button class="btn">Restart</button>
-			<button class="btn">Home</button>
-			<button class="btn">Progress</button>
-			<button class="btn">Exit</button>
+			<a href="/birds/welcome"><button class="btn">Restart</button></a>
+			<a href="/birds/welcome"><button class="btn">Home</button></a>
+			<!-- Trigger the modal with a button -->
+            <button class="btn" id="padding" data-toggle="modal" data-target="#myModal">Progress</button>
+
+  				<!-- Modal -->
+  				<div class="modal fade" id="myModal" role="dialog">
+    				<div class="modal-dialog">
+    		
+   		 			  <!-- Modal content--> 
+    					<div class="modal-content" id="modal_design" style="color: #808080" align="left">
+        					<div class="modal-header">
+          						<button type="button" class="close" data-dismiss="modal">&times;</button>
+          						<h4 class="modal-title" align="center">PROGRESS</h4>
+        					</div>
+        					<div id="line"></div>
+        					<div class="modal-body">
+        {% if request.session.levelvocab  %}
+        Hii! {{ request.session.gender }<br>
+        Vocabulary  Level 1 completed ! {{request.session.vocab }}<br>
+            {% if request.session.levelmaths %}
+        		Mathematics Level 1 completed!{{ request.session.maths }}
+        	{% else %}
+        		<br>
+        		Mathematics {{request.session.maths }}
+        	{% endif %}
+        {% else %}
+        Hii! {{ request.session.gender }}<br>
+        Vocabulary {{request.session.vocab }}
+        	{% if request.session.levelmaths %}
+        		Mathematics Level 1 completed!{{ request.session.maths }}
+        	{% else %}
+        		<br>
+        		Mathematics {{request.session.maths }}
+        	{% endif %}
+		{% endif %}
+        </div>
+        					<div id="line"></div>
+        					<div class="modal-footer">
+          						<button type="button" class="btn" data-dismiss="modal">Close</button>
+        					</div>
+      					</div>
+      				</div>
+  				</div>
+			<a href="/birds/"><button class="btn">Exit</button>
 		</div>
 	</div>
 	<div id="right"></div>
@@ -88,11 +134,11 @@
            			{
            				console.log("at wrong answer");
                 		//$('#outer-form').empty();
-                    	$("#response").html("wrong answer ! <br><button id='again' class='btn'> try again. </button>"); 
+                    	$("#response").html("wrong answer ! <button id='resp'>See answer</button> "); 
                     	$("#life").empty();
                     	$("#life").html("Lives left:"+response.life+" ");
                     	//location.href="/birds/welcome/vocabulary/"+parseInt(qid)+"/";
-            	
+            	//<br><button id='again' class='btn'> try again. </button>
            			}
                 },
                 error: function(data) {
@@ -109,6 +155,10 @@
 </script>
 
 <script type="text/javascript">
+document.getElementById('resp').onclick=function(){
+
+}
+/*
 document.getElementById("again").onclick= function() {
 			var qid=$('#next').attr('qid');
 			var quesid=parseInt(qid)+1;
@@ -118,6 +168,7 @@ document.getElementById("again").onclick= function() {
 			//location.href="/birds/welcome/vocabulary/"+parseInt(qid)+"/";
 			// body...
 		};
+		*/
 </script>
 <style type="text/css">
 	#left {
@@ -182,14 +233,34 @@ document.getElementById("again").onclick= function() {
   		background: #316e96;
   		padding: 10px 10px 10px 10px;
   		text-decoration: none;
+  		margin-right: 20px;
   	}
 	#box {
 		position: relative;
-		margin-top: 70px;
+		margin-top: 150px;
 		padding-top: 20px;
 		padding-bottom: 20px;
 		padding-left: 50px;	
 		margin-left: 20px;
+	}
+	#response {
+		font-family: comic sans MS;
+		margin-left: 37%;
+		color: red;
+	}
+	#life {
+		font-family: comic sans MS;
+		float: right;
+	}
+	/*modal design*/
+	#modal_design {
+		border: 5px solid #316e96;
+		border-radius: 50px;
+		font-family: Comic sans MS;
+	}
+	#line {
+		border: 2px solid black;
+		height: 1px;
 	}
 </style>
 </body>

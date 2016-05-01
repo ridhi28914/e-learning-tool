@@ -42,15 +42,28 @@
         					</div>
         					<div id="line"></div>
         					<div class="modal-body">
-        						{% if request.session.levelvocab  %}
-        Your name {{ request.session.gender }<br>
+        					{% if request.session.levelvocab  %}
+        Hii! {{ request.session.gender }<br>
         Vocabulary {{request.session.vocab }}<br>
         Vocabulary Level 1 completed !
+        	{% if request.session.levelmaths %}
+        		Mathematics {{ request.session.maths }}
+        		Mathematics Level 1 completed!
+        	{% else %}
+        		<br>
+        		Mathematics {{request.session.maths }}
+        	{% endif %}
         {% else %}
-        Your name {{ request.session.gender }}<br>
+        Hii! {{ request.session.gender }}<br>
         Vocabulary {{request.session.vocab }}
-
-{% endif %}
+        	{% if request.session.levelmaths %}
+        		Mathematics {{ request.session.maths }}
+        		Mathematics Level 1 completed!
+        	{% else %}
+        		<br>
+        		Mathematics {{request.session.maths }}
+        	{% endif %}
+		{% endif %}
         					</div>
         					<div id="line"></div>
         					<div class="modal-footer">

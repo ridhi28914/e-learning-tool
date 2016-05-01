@@ -1,7 +1,5 @@
 {% load staticfiles %}
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,11 +10,12 @@
 	<div id="center" align="center">
 		<div id="head"><h1 >WELCOME TO LEARNING ACADEMY</h1></div>
 		<h3>Select a character of your choice</h3>
-		<img src="{% static "birds/images/tomm.png" %}">
-		<img src="{% static "birds/images/jerry.png" %}">
+		
 
 		<form id="entryForm" action="{% url 'birds:wel' %}" method="POST">{% csrf_token %}
-		<input type="text" name="name" placeholder="enter your name" value=""></input>
+		<input name="tomm" type="radio" onclick="change('n2')" value="tomm" id="n2" ><img src="{% static "birds/images/tomm.png" %}"> </input>
+		<input name="jerry" type="radio" onclick="change('n3')" value="jerry" id="n3" ><img src="{% static "birds/images/jerry.png" %}"> </input>
+		<input type="text" name="name" placeholder="You are?" id="n1" value=""></input>
 		<input type="submit" class="button" value="submit" name="submit"></input>
 		</form>
 	<div> {{ resp }} </div>
@@ -24,33 +23,15 @@
 	<div id="right"></div>
 </body>
 </html>
-
-<script language="JavaScript">
-
-    /*
-    $(document).ready(function() {
-    	//e.getPreventDefault();
-        $("#entryForm").submit(function() { // catch the form's submit event
-        	console.log($(this).serialize());	
-            $.ajax({ // create an AJAX call...
-                data: $(this).serialize(), // get the form data
-                type: 'GET' ,
-                url: "{% url 'birds:wel' %}",
-                success: function(response) { 
-                	console.log("passed");
-                	location.href="/birds/welcome";
-                },
-                error: function(data) {
-                	console.log("failed");
-                	location.href="/birds/welcome";
-            }
-            });
-            return false;
-        });
-    });
-    */
+<script type="text/javascript">
+	function change(radio) {
+    var n1 = document.getElementById('n1');
+    console.log(n1.value);
+    var button = document.getElementById(radio);
+    n1.value = button.value;
+    console.log(n1.value);
+}
 </script>
-
 <style type="text/css">
 	#left {
 		float: left;

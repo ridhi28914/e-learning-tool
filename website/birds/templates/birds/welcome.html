@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>welcome page</title>
-	<meta charset="utf-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -19,12 +19,8 @@
 		</div>
 		<div class="fade-in b">  
 			<div id="image"><img src="{% static "birds/images/final.png" %}" style="width: 60px; height: 60px;border-radius: 50px"></div>
-			<div class="list" style="display: inline-block;" id="communication"><a href="/birds/welcome/vocabulary" style="text-decoration: none;color: rgb(149,149,149);"><b> COMMUNICATION </b></a></div>
-		</div>
-		<div class="fade-in c"> 
-			<div id="image"><img src="{% static "birds/images/final.png" %}" style="width: 60px; height: 60px;border-radius: 50px"></div>
-			<div class="list" style="display: inline-block;" id="grammar"><a href="/birds/welcome/grammar" style="text-decoration: none;color: rgb(149,149,149);"><b> GRAMMAR </b></a></div>
-		</div>
+			<div class="list" style="display: inline-block;" id="communication"><a href="/birds/welcome/mathematics" style="text-decoration: none;color: rgb(149,149,149);"><b> Mathematics </b></a></div>
+		</Mathematics
 		<div id="box">
 			<a href="/birds/welcome"><button class="btn">Restart</button></a>
 			<a href="/birds/welcome"><button class="btn">Home</button></a>
@@ -45,14 +41,27 @@
         <div id="line"></div>
         <div class="modal-body">
         {% if request.session.levelvocab  %}
-        Your name {{ request.session.gender }<br>
+        Hii! {{ request.session.gender }<br>
         Vocabulary {{request.session.vocab }}<br>
         Vocabulary Level 1 completed !
+        	{% if request.session.levelmaths %}
+        		Mathematics {{ request.session.maths }}
+        		Mathematics Level 1 completed!
+        	{% else %}
+        		<br>
+        		Mathematics {{request.session.maths }}
+        	{% endif %}
         {% else %}
-        Your name {{ request.session.gender }}<br>
+        Hii! {{ request.session.gender }}<br>
         Vocabulary {{request.session.vocab }}
-
-{% endif %}
+        	{% if request.session.levelmaths %}
+        		Mathematics {{ request.session.maths }}
+        		Mathematics Level 1 completed!
+        	{% else %}
+        		<br>
+        		Mathematics {{request.session.maths }}
+        	{% endif %}
+		{% endif %}
         </div>
         <div id="line"></div>
         <div class="modal-footer">

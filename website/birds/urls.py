@@ -18,8 +18,8 @@ urlpatterns = [
     url(r'^welcome/vocabulary/(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
     url(r'^welcome/vocabulary/(?P<question_id>[0-9]+)/vote/$', views.vote, name='vote'),
 
-    url(r'^welcome/grammar/$',views.gramm, name='grammar'),
-    url(r'^welcome/grammar/(?P<question_id>[0-9]+)/$', views.detailgramm, name='detailgramm'),
-    url(r'^welcome/grammar/(?P<question_id>[0-9]+)/vote/$', views.votegramm, name='votegramm'),
+    url(r'^welcome/mathematics/$',views.maths, name='mathematics'),
+    url(r'^welcome/mathematics/(?P<question_id>[0-9]+)/$', views.detailmaths, name='detailmaths'),
+    url(r'^welcome/mathematics/(?P<question_id>[0-9]+)/vote/$', views.votemaths,  name='votemaths'),
 ]
 #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

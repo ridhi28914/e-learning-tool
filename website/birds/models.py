@@ -4,7 +4,6 @@ from django.db import models
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200,unique= True)
-    group = models.CharField(max_length=200)
 
     def __repr__(self):
         return self.question_text
@@ -24,9 +23,8 @@ class Choice(models.Model):
         return self.choice_text
 
 
-class Questiongramm(models.Model):
+class Questionmaths(models.Model):
     question_text = models.CharField(max_length=200,unique= True)
-    group = models.CharField(max_length=200)
 
     def __repr__(self):
         return self.question_text
@@ -37,8 +35,8 @@ class Questiongramm(models.Model):
 #    pub_date = models.DateTimeField('date published')
     #choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
 
-class Choicegramm(models.Model):
-    question = models.ForeignKey(Questiongramm, on_delete=models.CASCADE)
+class Choicemaths(models.Model):
+    question = models.ForeignKey(Questionmaths, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     ans = models.BooleanField(default=False)
 

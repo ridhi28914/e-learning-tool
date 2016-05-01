@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
-from .models import Question,Choice,Questiongramm,Choicegramm
+from .models import Question,Choice,Questionmaths,Choicemaths
 from django.core.serializers import json, serialize
 from django.http import JsonResponse
 #from django.utils.datastructures import MultiValueDictKeyError
@@ -11,8 +11,10 @@ from django.http import JsonResponse
 def index(request):
     request.session['gender'] = None
     request.session['vocab']=0
+    request.session['maths']=0
     request.session['lives']=2
     request.session['levelvocab']=False
+    request.session['levelmaths']=False
     print request.session['gender']
     return render(request,'birds/index.html',{'resp':''})
 
@@ -28,7 +30,7 @@ def wel(request):
 	if(request.method == "POST"):
 	    request.session['gender'] = name
 #	if 'gender' not in request.session:	
-	if(request.session['gender'] == None):
+	if(request.session['gender'] == None or request.session['gender']==""):
 	    print "now at wel.html"
 	    return render(request,'birds/index.html',{'resp':'Please select a character.'})
 	else:
@@ -40,7 +42,7 @@ def wel(request):
 	
 def vocab(request):
 	if(request.session['gender'] == None):
-	    return HttpResponse("you didnt select the gender")
+	    return render(request,'birds/index.html',{'resp':'Please select a character.'})
 	else:    
 	    return render(request,'birds/vocab.html')
 
@@ -50,16 +52,20 @@ def vocab(request):
 
 def detail(request, question_id):
     if(request.session['gender'] == None):
-	    return HttpResponse("you didnt select the gender")
+	    return render(request,'birds/index.html',{'resp':'Please select a character.'})
     else:    
-        if(question_id > 2):
+        qid=int(question_id)
+        if(qid > 2):
             request.session['levelvocab']=True
-	    question = get_object_or_404(Question, pk=question_id)
-	    return render(request, 'birds/detail.html', {'question': question})
+        else:
+            request.session['levelvocab']=False
+        print request.session['levelvocab']
+        question = get_object_or_404(Question, pk=question_id)
+        return render(request, 'birds/detail.html', {'question': question})
 
 def vote(request, question_id):
 	if(request.session['gender'] == None):
-	    return HttpResponse("you didn't select the gender")
+	    return render(request,'birds/index.html',{'resp':'Please select a character.'})
 	else: 	
 	    question = get_object_or_404(Question, pk=question_id)
         try:
@@ -81,45 +87,60 @@ def vote(request, question_id):
             		request.session['lives']=2
             		return JsonResponse({'resp':'false','life':request.session['lives']})
             	else:
-        		return JsonResponse({'resp':'wrong answer','life':request.session['lives']})
+                    print question.choice_set.get(ans=True)
+                    c=question.choice_set.get(ans=True)
+                    return JsonResponse({'resp':'wrong answer','life':request.session['lives'],'ans':c.choice_text})
 
-def gramm(request):
-	if(request.session['gender'] == None):
-	    return HttpResponse("you didnt select the gender")
-	else:    
-	    return render(request,'birds/gramm.html')
-	
+def maths(request):
+    if(request.session['gender'] == None):
+        return render(request,'birds/index.html',{'resp':'Please select a character.'})
+    else:    
+        return render(request,'birds/mathematics.html')
 
 
-def detailgramm(request, question_id):
-    question = get_object_or_404(Questiongramm, pk=question_id)
-    return render(request, 'birds/detailgramm.html', {'question': question})
-
-def votegramm(request, question_id):
-    question = get_object_or_404(Questiongramm, pk=question_id)
-    try:
-        selected_choice = question.choicegramm_set.get(pk=request.GET['choice'])
-        
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        
-        return render(request, 'birds/detailgramm.html', {
-            'question': question,
-            'message': "You didn't select a choice.",
-        })
-    else:
-        if(selected_choice.ans):
-        	return render(request, 'birds/resultsgramm.html', {
-        	'question_id': question_id,
-            'choice':selected_choice,
-            'message': "right.",
-        })
+def detailmaths(request, question_id):
+    if(request.session['gender'] == None):
+        return render(request,'birds/index.html',{'resp':'Please select a character.'})
+    else:    
+        qid=int(question_id)
+        if(qid > 2):
+            print ">2 level is "
+            request.session['levelmaths']=True
         else:
-        	return render(request, 'birds/resultsgramm.html', {
-        	'question_id': question_id,
-            'choice':selected_choice,
-            'message': "wrong.",
-        })
+            print "<2 level is "
+            request.session['levelmaths']=False
+        print request.session['levelmaths']
+        question = get_object_or_404(Questionmaths, pk=question_id)
+        return render(request, 'birds/detailmaths.html', {'question': question})
+
+def votemaths(request, question_id):
+    if(request.session['gender'] == None):
+        return render(request,'birds/index.html',{'resp':'Please select a character.'})
+    else:   
+        question = get_object_or_404(Questionmaths, pk=question_id)
+        try:
+            selected_choice = question.choicemaths_set.get(pk=request.GET['choice'])
+        except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+            print "key error"
+            return JsonResponse({'resp':'KeyError','error_message': "You didn't select a choice."})
+        else:
+            if(selected_choice.ans):
+                request.session['maths']=request.session['maths']+1
+                print "marks in maths is:"
+                print request.session['maths']
+                return JsonResponse({'resp':'true','life':request.session['lives']})
+            else:
+                request.session['lives']=request.session['lives']-1
+                print request.session['lives']
+                if (request.session['lives'] == 0):
+                    request.session['maths']=0
+                    request.session['lives']=2
+                    return JsonResponse({'resp':'false','life':request.session['lives']})
+                else:
+                    print question.choicemaths_set.get(ans=True)
+                    c=question.choicemaths_set.get(ans=True)
+                    return JsonResponse({'resp':'wrong answer','life':request.session['lives'],'ans':c.choice_text})
 
 
 

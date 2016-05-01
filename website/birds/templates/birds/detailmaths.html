@@ -1,0 +1,268 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ques page</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div id="left"></div>
+    <div id="center">
+    <div id="life">Lives left: {{request.session.lives}} </div>
+    <div  id="ques"><h2>{{ question.question_text }}</h2></div>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<div  id="next" qid="{{ question.id }}"></div>
+<div id="level " level="1" >
+    
+</div>
+        <form id="myForm" action="" method="GET">
+{% csrf_token %}
+{% for choice in question.choicemaths_set.all %}
+            <div >
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"> </input><label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            </div>
+{% endfor %}
+        <br><input class="btn" type="submit" value="Submit" style="margin-left: 40%;"></input>
+        </form>
+    
+<div id="response"> </button>
+</div>
+        <div id="box">
+            <a href="/birds/welcome"><button class="btn">Restart</button></a>
+            <a href="/birds/welcome"><button class="btn">Home</button></a>
+            <!-- Trigger the modal with a button -->
+            <button class="btn" id="padding" data-toggle="modal" data-target="#myModal">Progress</button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+            
+                      <!-- Modal content--> 
+                        <div class="modal-content" id="modal_design" style="color: #808080" align="left">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title" align="center">PROGRESS</h4>
+                            </div>
+                            <div id="line"></div>
+                            <div class="modal-body">
+        {% if request.session.levelvocab  %}
+        Hii! {{ request.session.gender }<br>
+        Vocabulary {{request.session.vocab }}<br>
+        Vocabulary Level 1 completed !
+            {% if request.session.levelmaths %}
+                Mathematics Level 1 completed! {{ request.session.maths }}
+            {% else %}
+                <br>
+                Mathematics {{request.session.maths }}
+            {% endif %}
+        {% else %}
+        Hii! {{ request.session.gender }}<br>
+        Vocabulary {{request.session.vocab }}
+            {% if request.session.levelmaths %}
+                Mathematics Level 1 completed! {{ request.session.maths }}
+            {% else %}
+                <br>
+                Mathematics {{request.session.maths }}
+            {% endif %}
+        {% endif %}
+        </div>
+                            <div id="line"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <a href="/birds/"><button class="btn">Exit</button>
+        </div>
+    </div>
+    <div id="right"></div>
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js">
+</script>
+<script language="JavaScript">
+    $(document).ready(function() {
+        //e.getPreventDefault();
+        $("#myForm").submit(function() { // catch the form's submit event
+            console.log($(this).serialize());   
+            $.ajax({ // create an AJAX call...
+                data: $(this).serialize(), // get the form data
+                type: 'GET' ,
+                url: "{% url 'birds:votemaths' question.id %}",
+                success: function(response) { 
+                    var qid=$('#next').attr('qid');
+                    var quesid=parseInt(qid)+1;
+                    
+                    if(response.resp == "true")
+                    {
+                    //console.log(qid);
+                    //console.log(quesid);
+                        if(quesid<=2)
+                        location.href="/birds/welcome/mathematics/"+quesid+"/";
+                        else
+                        {
+                            $("#life").empty();
+                            $("#life").html("Lives left:"+response.life+" ");
+                            //$("#response").html("in response");
+                            console.log(quesid);
+                            if(quesid==3)
+                                $("#response").html("level one completed <br><a href='/birds/welcome/mathematics/"+quesid+"/'><button class='btn'>Go to level 2</button></a> " );
+                            else if(quesid>4){
+                                $("#response").html("Level 2 completed! <a href='/birds/welcome'><button class='btn'>Play again?</button></a>");
+                            }
+                            else if(quesid==4)
+                            {
+                                location.href="/birds/welcome/mathematics/"+quesid+"/";
+                            }
+
+                        }
+
+                    }
+                    else if(response.resp=="false"){
+                        $("#life").empty();
+                        //$("#life").html("Lives left:"+response.life+" ");
+                        location.href="/birds/welcome";
+                    }
+                    else if(response.resp=="KeyError"){
+                        $("#response").html("Please Select a Choice");
+                    }
+                    else 
+                    {
+                        console.log("at wrong answer");
+                        //$('#outer-form').empty();
+                        $("#response").html("wrong answer ! <button id='resp'>See answer</button> "); 
+                        $("#life").empty();
+                        $("#life").html("Lives left:"+response.life+" ");
+                        //location.href="/birds/welcome/vocabulary/"+parseInt(qid)+"/";
+                //<br><button id='again' class='btn'> try again. </button>
+                    }
+                },
+                error: function(data) {
+                $("#response").html("Something went wrong!");
+            }
+            });
+            return false;
+        });
+
+
+    });
+
+
+</script>
+
+<script type="text/javascript">
+document.getElementById('resp').onclick=function(){
+
+}
+/*
+document.getElementById("again").onclick= function() {
+            var qid=$('#next').attr('qid');
+            var quesid=parseInt(qid)+1;
+            console.log($('#response').html());
+            $("#response").empty();
+            console.log($('#response').html());
+            //location.href="/birds/welcome/vocabulary/"+parseInt(qid)+"/";
+            // body...
+        };
+        */
+</script>
+<style type="text/css">
+    #left {
+        float: left;
+        display: inline-block;
+        background-color: white;
+        width: 30%;
+        height: 600px;
+    }
+    #center {
+        background: url({% static "birds/images/bg.png" %}) no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        color: #808080;
+        background-color: rgb(200,200,200);
+        font-family: comic sans MS;
+        display: inline-block;
+        background-color: white;
+        width: 40%;
+        height: 600px;
+    
+    }
+    #right {
+        float: right;
+        display: inline-block;
+        background-color: white;
+        width: 30%;
+        height: 600px;
+    }
+    #ques {
+        color: #808080;
+        text-align: center;
+        margin-top: 60px;
+    }
+    #form {
+        display: block;
+        margin-left: 40%;
+        margin-top: 80px;
+    }
+    .submitbtn {
+        -webkit-border-radius: 10
+        -moz-border-radius: 10;
+        border-radius: 30px;
+        font-family: Courier New;
+        color: #fcfcfc;
+        font-size: 15px;
+        background: #316e96; 
+        text-decoration: none;
+        margin-left: 40%;
+        margin-top: 110px;
+        padding: 10px 10px 10px 10px;
+    }
+    .btn {
+        -webkit-border-radius: 10
+        -moz-border-radius: 10;
+        border-radius: 30px;
+        font-family: Courier New;
+        color: #fcfcfc;
+        font-size: 15px;
+        background: #316e96;
+        padding: 10px 10px 10px 10px;
+        text-decoration: none;
+        margin-right: 20px;
+    }
+    #box {
+        position: relative;
+        margin-top: 150px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 50px; 
+        margin-left: 20px;
+    }
+    #response {
+        font-family: comic sans MS;
+        margin-left: 37%;
+        color: red;
+    }
+    #life {
+        font-family: comic sans MS;
+        float: right;
+    }
+    /*modal design*/
+    #modal_design {
+        border: 5px solid #316e96;
+        border-radius: 50px;
+        font-family: Comic sans MS;
+    }
+    #line {
+        border: 2px solid black;
+        height: 1px;
+    }
+</style>
+</body>
+</html>
