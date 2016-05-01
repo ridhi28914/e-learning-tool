@@ -55,7 +55,7 @@ def detail(request, question_id):
 	    return render(request,'birds/index.html',{'resp':'Please select a character.'})
     else:    
         qid=int(question_id)
-        if(qid > 2):
+        if(qid > 6):
             request.session['levelvocab']=True
         else:
             request.session['levelvocab']=False

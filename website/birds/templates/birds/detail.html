@@ -18,9 +18,6 @@
 	{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <div  id="next" qid="{{ question.id }}"></div>
-<div id="level " level="1" >
-	
-</div>
 		<form id="myForm" action="" method="GET">
 {% csrf_token %}
 {% for choice in question.choice_set.all %}
@@ -28,7 +25,7 @@
 				<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"> </input><label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
 			</div>
 {% endfor %}
-		<br><input class="btn" type="submit" value="Submit" style="margin-left: 40%;"></input>
+		<br ><div id="butt" ><input class="btn" type="submit" value="Submit" style="margin-left: 40%;"></input></div>
 		</form>
 	
 <div id="response"> </button>
@@ -101,7 +98,7 @@
                 	{
                 	//console.log(qid);
 					//console.log(quesid);
-						if(quesid<=2)
+						if(quesid<=6)
                 		location.href="/birds/welcome/vocabulary/"+quesid+"/";
                 		else
                 		{
@@ -109,14 +106,19 @@
                     		$("#life").html("Lives left:"+response.life+" ");
                 			//$("#response").html("in response");
                 			console.log(quesid);
-                			if(quesid==3)
-                				$("#response").html("level one completed <br><a href='/birds/welcome/vocabulary/"+quesid+"/'><button class='btn'>Go to level 2</button></a> " );
-                			else if(quesid>4){
+                			if(quesid==7)
+                				$("#response").html("level one completed <br><a href='/birds/welcome/vocabulary/"+quesid+"/'><button class='btn'>Go to level 2</button></a>");
+                			else if(quesid>12){
                 				$("#response").html("Level 2 completed! <a href='/birds/welcome'><button class='btn'>Play again?</button></a>");
                 			}
-                			else if(quesid==4)
+                			else if(quesid==12)
                 			{
 								location.href="/birds/welcome/vocabulary/"+quesid+"/";
+                			}
+                			else if(quesid>7)
+                			{
+
+                		location.href="/birds/welcome/vocabulary/"+quesid+"/";
                 			}
 
                 		}
@@ -124,6 +126,7 @@
             		}
             		else if(response.resp=="false"){
             			$("#life").empty();
+            			$('#butt').empty();
             			$("#response").html("Correct answer is:"+response.ans+"<br>Game Over <a href='/birds/welcome'><button>Play again?</button></a>"); 
             			//location.href="/birds/welcome";
             		}

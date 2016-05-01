@@ -28,7 +28,8 @@
                 <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"> </input><label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
             </div>
 {% endfor %}
-        <br><input class="btn" type="submit" value="Submit" style="margin-left: 40%;"></input>
+        <br><div id="butt" ><input class="btn" type="submit" value="Submit" style="margin-left: 40%;"></input>
+        </div>
         </form>
     
 <div id="response"> </button>
@@ -102,7 +103,7 @@
                     {
                     //console.log(qid);
                     //console.log(quesid);
-                        if(quesid<=2)
+                        if(quesid<=6)
                         location.href="/birds/welcome/mathematics/"+quesid+"/";
                         else
                         {
@@ -110,14 +111,19 @@
                             $("#life").html("Lives left:"+response.life+" ");
                             //$("#response").html("in response");
                             console.log(quesid);
-                            if(quesid==3)
+                            if(quesid==7)
                                 $("#response").html("level one completed <br><a href='/birds/welcome/mathematics/"+quesid+"/'><button class='btn'>Go to level 2</button></a> " );
-                            else if(quesid>4){
+                            else if(quesid>10){
                                 $("#response").html("Level 2 completed! <a href='/birds/welcome'><button class='btn'>Play again?</button></a>");
                             }
-                            else if(quesid==4)
+                            else if(quesid==12)
                             {
                                 location.href="/birds/welcome/mathematics/"+quesid+"/";
+                            }
+                            else if(quesid>7)
+                            {
+
+                        location.href="/birds/welcome/mathematics/"+quesid+"/";
                             }
 
                         }
@@ -125,8 +131,9 @@
                     }
                     else if(response.resp=="false"){
                         $("#life").empty();
-                        $("#response").html("Correct answer is:"+response.ans+"<br>Game Over <a href='/birds/welcome'><button>Play again?</button></a>");
-                        //$("#life").html("Lives left:"+response.life+" ");
+                        $('#butt').empty();
+                        $("#response").html("Correct answer is:"+response.ans+"<br>Game Over <a href='/birds/welcome'><button>Play again?</button></a>"); 
+                        //location.href="/birds/welcome";
                     }
                     else if(response.resp=="KeyError"){
                         $("#response").html("Please Select a Choice");

@@ -9,18 +9,17 @@
 	<div id="left"></div>
 	<div id="center" align="center">
 		<div id="head"><h1 >WELCOME TO LEARNING ACADEMY</h1></div>
-		<h3>Select a character of your choice</h3>
+		<h4 style="color: white;">Select a character of your choice</h4>
 		
-
-		<form id="entryForm" action="{% url 'birds:wel' %}" method="POST">{% csrf_token %}
-		<input name="tomm" type="radio" onclick="change('n2')" value="tomm" id="n2" ><img src="{% static "birds/images/tomm.png" %}"> </input>
-		<input name="jerry" type="radio" onclick="change('n3')" value="jerry" id="n3" ><img src="{% static "birds/images/jerry.png" %}"> </input>
-		<input type="text" name="name" placeholder="You are?" id="n1" value=""></input>
-		<input type="submit" class="button" value="submit" name="submit"></input>
+		<form id="entryForm" action="{% url 'birds:wel' %}" method="POST"> {% csrf_token %}
+		<input name="tomm" type="radio" onclick="change('n2')" value="tomm" id="n2" ><img src="{% static "birds/images/tomm.png" %}" id="image"> </input>
+		<input name="jerry" type="radio" onclick="change('n3')" value="jerry" id="n3" ><img src="{% static "birds/images/jerry.png" %}" id="image"> </input> <br>
+		<input type="text" name="name" placeholder="You are?" id="n1" value="" style="margin-top: 10px;"></input>
+		<input type="submit" class="button" value="SUBMIT" name="submit" style="margin-top: 50px; border-radius: 10px; font-size: 20px;"></input>
 		</form>
 	<div> {{ resp }} </div>
 	</div>
-	<div id="right"></div>
+	<div id="right" style="color:white"></div>
 </body>
 </html>
 <script type="text/javascript">
@@ -36,41 +35,49 @@
 	#left {
 		float: left;
 		display: inline-block;
-		background-color: #f6f6ee;
+		background-color: white;
 		width: 30%;
 		height: 600px;
 	}
 	#center {
-		color: #808080;
-		font-family: ;
+		background: url({% static "birds/images/book13.jpg" %}) no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+		color: black;
+		font-family: comic sans MS;
 		display: inline-block;
-		background-color: white;
 		width: 40%;
 		height: 600px;
-		margin-top: 60px;
 	}
 	#right {
 		float: right;
 		display: inline-block;
-		background-color: #ededde;
+		background-color: white;
 		width: 30%;
 		height: 600px;
+	}
+	#image {
+		width: 100px;
+		height: 100px;
 	}
 	#line {
 		height: 2px;
 		width: 40px;
 	}
 	#head {
-		background-color: rgb(34, 74, 82);
+		background-color: #ff8080;
 		font-family: Comic Sans MS;
 		border: 5px solid #808080;
 		border-radius: 50px;
 		color: white;
 		padding-top: 20px;
 		padding-bottom: 20px;
+		margin-top: 60px;
 	}
 	.button {
-		background-color: #4CAF50; /* Green */
+		background-color: #ff8080; /* Green */
     	border: none;
     	color: white;
     	padding: 5px 32px;
@@ -78,5 +85,13 @@
     	text-decoration: none;
     	display: block;
     	font-size: 16px;
+    	margin-top: 30px;
+	}
+	.button:hover {
+		color: black;
+		background-color: #ff8080;
+		border-color: #ff8080;
+		border-width: 10px;
+		box-shadow: 5px 5px 5px black;
 	}
 	</style>
